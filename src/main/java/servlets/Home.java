@@ -1,6 +1,8 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import beans.Albums;
+import dao.AlbumDao;
 import dao.UserDao;
 
 /**
@@ -39,10 +43,20 @@ public class Home extends HttpServlet {
     		session.removeAttribute("form");
     		status = true;
     	}
+  
+    	// si l'utilisateur n'est pass connecté on recupére les albums publics
     	
-    	
-		request.setAttribute("users",UserDao.getAll()); 
-		//System.out.println("liste: "+request.getAttribute("utilisateurs"));
+    	if(session.getAttribute("user") == null) {
+    		request.setAttribute("publicAlbums", AlbumDao.getPublicAlbums());
+    		//System.out.println("Liste albums public: "+request.getAttribute("publicAlbums"));
+    		/*ArrayList<Albums> publicAlbums = new ArrayList<Albums>();
+    		publicAlbums = (ArrayList<Albums>) request.getAttribute("publicAlbums");
+    		for(Albums album: publicAlbums) {
+    			System.out.println(album.getCover());
+    		}*/
+    	}
+		//request.setAttribute("users",UserDao.getAll()); 
+		//System.out.println("liste: "+request.getAttribute("users"));
 		getServletContext().getRequestDispatcher("/WEB-INF/index.jsp").forward(request,response);
 	}
 

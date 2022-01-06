@@ -13,7 +13,7 @@ import jdbc.Database;
 public class UserDao {
 	
 	public static int lastId = 0;
-	private static ArrayList<Users> users = new ArrayList<Users>();
+	//private static ArrayList<Users> users = new ArrayList<Users>();
 	
 	// ajout d'un utilisateur
 	public static void ajouter(Users u) {
@@ -65,4 +65,5 @@ public class UserDao {
 	  
 		
 	}
+	
 }

@@ -6,13 +6,13 @@ public class Images {
 	private int id, id_album;
 	private String titre, description, fichier;
 	private double hauteur, largeur;
-	private String dateXreation, dateMiseAjour;
+	private String dateCreation, dateMiseAjour;
 	
 	public Images() {
 		
 	}
 	public Images(int id, int id_album, String titre, String description, String fichier, double hauteur,
-			double largeur, String dateXreation, String dateMiseAjour) {
+			double largeur, String dateCreation, String dateMiseAjour) {
 		super();
 		this.id = id;
 		this.id_album = id_album;
@@ -21,11 +21,11 @@ public class Images {
 		this.fichier = fichier;
 		this.hauteur = hauteur;
 		this.largeur = largeur;
-		this.dateXreation = dateXreation;
+		this.dateCreation = dateCreation;
 		this.dateMiseAjour = dateMiseAjour;
 	}
 	public Images(int id_album, String titre, String description, String fichier, double hauteur, double largeur,
-			String dateXreation, String dateMiseAjour) {
+			String dateCreation, String dateMiseAjour) {
 		super();
 		this.id_album = id_album;
 		this.titre = titre;
@@ -33,7 +33,7 @@ public class Images {
 		this.fichier = fichier;
 		this.hauteur = hauteur;
 		this.largeur = largeur;
-		this.dateXreation = dateXreation;
+		this.dateCreation = dateCreation;
 		this.dateMiseAjour = dateMiseAjour;
 	}
 	public int getId() {
@@ -78,11 +78,11 @@ public class Images {
 	public void setLargeur(double largeur) {
 		this.largeur = largeur;
 	}
-	public String getDateXreation() {
-		return dateXreation;
+	public String getDateCreation() {
+		return dateCreation;
 	}
-	public void setDateXreation(String dateXreation) {
-		this.dateXreation = dateXreation;
+	public void setDateCreation(String dateXreation) {
+		this.dateCreation = dateXreation;
 	}
 	public String getDateMiseAjour() {
 		return dateMiseAjour;
