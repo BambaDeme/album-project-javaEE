@@ -5,9 +5,8 @@
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:if test="${!empty requestScope.publicAlbums}">
-  <jsp:useBean id="publicAlbums" scope="request" type="ArrayList<Albums>"/>
-</c:if>
+
+<jsp:useBean id="authorizedAlbums" scope="request" type="ArrayList<Albums>"/>
 <!doctype html>
 <html lang="en">
   <head>
@@ -49,56 +48,56 @@
   <body>
     
     <header>
-      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="<c:url value="/"/>">E-Album</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav me-auto mb-2 mb-md-0">
-              <c:if  test="${!empty sessionScope.user}">
-                <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="UserAlbums">Mes albums</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="PrivateAlbums">Albums privés</a>
-                </li>
-                <c:if test="${ sessionScope.user.role == 'admin'}">
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="<c:url value="/"/>">E-Album</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+              <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                <c:if  test="${!empty sessionScope.user}">
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Utilisateurs</a>
-                  </li>  
+                    <a class="nav-link active" aria-current="page" href="UserAlbums">Mes albums</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="PrivateAlbums">Albums privés</a>
+                  </li>
+                  <c:if test="${ sessionScope.user.role == 'admin'}">
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">Utilisateurs</a>
+                    </li>  
+                  </c:if>
+                         
                 </c:if>
-                       
-              </c:if>
-            </ul>
-            <!-- <form class="d-flex">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success" type="submit">Search</button>
-            </form> -->
-            <div class="d-flex">
-              <c:choose>
-                <c:when test="${empty sessionScope.user }"> 
-                  <a 
-                    href='<c:url value="/login"/>'
-                    class="btn btn-primary" 
-                  >
-                    Connexion
-                  </a>
-                </c:when>
+              </ul>
+              <!-- <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+              </form> -->
+              <div class="d-flex">
+                <c:choose>
+                  <c:when test="${empty sessionScope.user }"> 
+                    <a 
+                      href='<c:url value="/login"/>'
+                      class="btn btn-primary" 
+                    >
+                      Connexion
+                    </a>
+                  </c:when>
+                  
+                  <c:otherwise>
+                    <a href='<c:url value="/logout"/>' class="btn btn-primary">Déconnexion</a>
+                  </c:otherwise>
+                </c:choose> 
+  
+               
                 
-                <c:otherwise>
-                  <a href='<c:url value="/logout"/>' class="btn btn-primary">Déconnexion</a>
-                </c:otherwise>
-              </c:choose> 
-
-             
-              
+              </div>
             </div>
           </div>
-        </div>
-      </nav>
-    </header>
+        </nav>
+      </header>
 
     <main>
 
@@ -162,12 +161,14 @@
 
           <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             <c:choose>
-              <c:when test="${ empty requestScope.publicAlbums }">
-              <p> La liste est vide </p>
+              <c:when test="${ empty requestScope.authorizedAlbums }">
+                  <div>
+                    <h3> Aucun album partagé avec vous </h3>
+                  </div>
               </c:when>
 
-              <c:when test="${ !empty requestScope.publicAlbums }">
-                <c:forEach items="${requestScope.publicAlbums}" var="album">
+              <c:when test="${ !empty requestScope.authorizedAlbums }">
+                <c:forEach items="${requestScope.authorizedAlbums}" var="album">
                   <jsp:useBean id="album" scope="request" class="beans.Albums"/>
                   <div class="col">
                     <div class="card shadow-sm">
@@ -206,7 +207,6 @@
         <p>&copy; 2017–2021 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
       </footer>
     </main>
-
 
     <!-- <script src="../assets/dist/js/bootstrap.bundle.min.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

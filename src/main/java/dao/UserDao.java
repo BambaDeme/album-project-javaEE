@@ -12,7 +12,7 @@ import jdbc.Database;
 
 public class UserDao {
 	
-	public static int lastId = 0;
+	public static int lastId = 1;
 	//private static ArrayList<Users> users = new ArrayList<Users>();
 	
 	// ajout d'un utilisateur
@@ -26,7 +26,7 @@ public class UserDao {
 			ps.setString(3,u.getLastName());
 			ps.setString(4,u.getLogin());
 			ps.setString(5,u.getPassWord());
-			ps.setString(5,u.getRole());
+			ps.setString(6,u.getRole());
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {

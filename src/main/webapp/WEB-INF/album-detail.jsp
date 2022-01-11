@@ -52,42 +52,57 @@
       </head>
       <body>
         
-    <header>
-      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="<c:url value="/"/>">E-Album</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav me-auto mb-2 mb-md-0">
-              <c:if  test="${!empty sessionScope.user}">
-                <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="#">Mes albums</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="#">Mes albums</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Utilisateurs</a>
-                </li>         
-              </c:if>
-            </ul>
-            
-            <div class="d-flex">
-              <c:choose>
-                      <c:when test="${empty sessionScope.user }"> 
-                  <a href="" class="btn btn-primary">Connexion</a>
+        <header>
+          <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="<c:url value="/"/>">E-Album</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                  <c:if  test="${!empty sessionScope.user}">
+                    <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="UserAlbums">Mes albums</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="PrivateAlbums">Albums privés</a>
+                    </li>
+                    <c:if test="${ sessionScope.user.role == 'admin'}">
+                      <li class="nav-item">
+                        <a class="nav-link" href="#">Utilisateurs</a>
+                      </li>  
+                    </c:if>
+                           
+                  </c:if>
+                </ul>
+                <!-- <form class="d-flex">
+                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                  <button class="btn btn-outline-success" type="submit">Search</button>
+                </form> -->
+                <div class="d-flex">
+                  <c:choose>
+                    <c:when test="${empty sessionScope.user }"> 
+                      <a 
+                        href='<c:url value="/login"/>'
+                        class="btn btn-primary" 
+                      >
+                        Connexion
+                      </a>
                     </c:when>
+                    
                     <c:otherwise>
-                  <a href="" class="btn btn-primary">Déconnexion</a>
+                      <a href='<c:url value="/logout"/>' class="btn btn-primary">Déconnexion</a>
                     </c:otherwise>
                   </c:choose> 
+    
+                 
+                  
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      </nav>
-    </header>
+          </nav>
+        </header>
     
     <main>
     

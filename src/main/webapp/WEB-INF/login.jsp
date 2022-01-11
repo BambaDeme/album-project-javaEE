@@ -33,6 +33,18 @@
                               
                                 <div class="row">
                                   <div class="col-lg-9 mx-auto">
+                                    <c:if test="${!empty form }">
+                                        <c:choose>
+                                            <c:when test="${form.statusMessage == 'success' }">
+                                                <p class="alert alert-success">compte crée avec succées!<br>Vous pouvez vous connecter</p>
+                                            </c:when>
+                                            <c:when test="${form.statusMessage == 'fail' }">
+                                                <p class="alert alert-danger">Erreur lors de la création!<br>vérifiez le formulaire</p>
+                                            </c:when>
+                                        </c:choose>
+
+                                                
+                                    </c:if>
                                     <div class="bg-white rounded-lg shadow-sm p-5">
                                       <!-- Credit card form tabs -->
                                       <ul role="tablist" class="nav bg-light nav-pills rounded-pill nav-fill mb-3">
@@ -78,27 +90,92 @@
                               
                                         <!-- Paypal info -->
                                         <div id="nav-tab-signup" class="tab-pane fade">
-                                            <form role="form" method="post" action="/add">
-                                                <div class="form-group">
-                                                    <label for="firstName">Prénom</label>
-                                                    <input type="text" name="firstName" placeholder="Prénom" required class="form-control">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="lastName">Nom</label>
-                                                    <input type="text" name="lastName" placeholder="nom" required class="form-control">
-                                                </div>
-                                                <div class="form-group">
-                                                  <label for="username">Nom d'utilisateur</label>
-                                                  <input type="text" name="username" placeholder="Jason Doe" required class="form-control">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="password">Mot de passe</label>
-                                                    <input type="password" name="password" placeholder="password" required class="form-control">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="passwordConfirm">Confirmer mot de passe</label>
-                                                    <input type="password" name="passwordConfirm" placeholder="password" required class="form-control">
-                                                </div>
+                                            <form role="form" method="post" action="add">
+                                                <!-- firstName control -->
+                                                <c:if test="${empty form.erreurs.firstName }">
+                                                    <div class="form-group">
+                                                        <label for="firstName">Prénom</label>
+                                                        <input type="text" name="firstName" placeholder="Prénom" class="form-control" value="${form.user.firstName }">
+                                                    </div>
+                                                </c:if>
+                                                <c:if test="${!empty form.erreurs.firstName }">
+                                                    <div class="form-group">
+                                                        <label for="firstName" class="text-danger">Prénom</label>
+                                                        <input type="text" name="firstName" placeholder="Prénom"  class="form-control is-invalid" value="${form.user.firstName }">
+                                                        <small id="passwordHelp" class="text-danger">
+                                                            <c:out value="${form.erreurs.firstName }"/>
+                                                        </small> 
+                                                    </div>
+                                                </c:if>
+                                                
+
+                                                <!-- last name control -->
+                                                <c:if test="${empty form.erreurs.lastName}">
+                                                    <div class="form-group">
+                                                        <label for="lastName">Nom</label>
+                                                        <input type="text" name="lastName" placeholder="nom" required class="form-control" value="${form.user.lastName }">
+                                                    </div>
+                                                </c:if>
+                                                <c:if test="${!empty form.erreurs.lastName}">
+                                                    <div class="form-group">
+                                                        <label for="lastName" class="text-danger">Nom</label>
+                                                        <input type="text" name="lastName" placeholder="nom" required class="form-control is-invalid" value="${form.user.lastName }">
+                                                        <small id="passwordHelp" class="text-danger">
+                                                            <c:out value="${form.erreurs.lastName }"/>
+                                                        </small> 
+                                                    </div>
+                                                </c:if>
+
+                                                <!-- login control -->
+                                                <c:if test="${empty form.erreurs.username}">
+                                                    <div class="form-group">
+                                                        <label for="username">Nom d'utilisateur</label>
+                                                        <input type="text" name="username" placeholder="Jason Doe" required class="form-control" value="${form.user.login }">
+                                                      </div>
+                                                </c:if>
+                                                <c:if test="${!empty form.erreurs.username}">
+                                                    <div class="form-group">
+                                                        <label for="username" class="text-danger">Nom d'utilisateur</label>
+                                                        <input type="text" name="username" placeholder="Jason Doe" required class="form-control is-invalid" value="${form.user.login }">
+                                                        <small id="passwordHelp" class="text-danger">
+                                                            <c:out value="${form.erreurs.username }"/>
+                                                        </small> 
+                                                    </div>
+                                                </c:if>
+                                                
+                                                <!-- Password control -->
+                                                <c:if test="${empty form.erreurs.password }">
+                                                    <div class="form-group">
+                                                        <label for="password">Mot de passe</label>
+                                                        <input type="password" name="password" placeholder="password" required class="form-control">
+                                                    </div>
+                                                </c:if>
+                                                <c:if test="${!empty form.erreurs.password }">
+                                                    <div class="form-group">
+                                                        <label for="password" class="text-danger">Mot de passe</label>
+                                                        <input type="password" name="password" placeholder="password" required class="form-control is-invalid">
+                                                        <small id="passwordHelp" class="text-danger">
+                                                            <c:out value="${form.erreurs.password }"/>
+                                                        </small> 
+                                                    </div>
+                                                </c:if>
+                                                
+                                                <!-- confirm password control -->
+                                                <c:if test="${empty form.erreurs.password }">
+                                                    <div class="form-group">
+                                                        <label for="passwordConfirm">Confirmer mot de passe</label>
+                                                        <input type="password" name="passwordConfirm" placeholder="password" required class="form-control" >
+                                                    </div>
+                                                </c:if>
+                                                <c:if test="${!empty form.erreurs.password }">
+                                                    <div class="form-group">
+                                                        <label for="passwordConfirm" class="text-danger">Confirmer mot de passe</label>
+                                                        <input type="password" name="passwordConfirm" required class="form-control is-invalid" >
+                                                        <small id="passwordHelp" class="text-danger">
+                                                            <c:out value="${form.erreurs.passwordConfirm }"/>
+                                                        </small> 
+                                                    </div>
+                                                </c:if>
                                                 
                                                 <button type="submit" class="subscribe btn btn-primary btn-block rounded-pill shadow-sm"> Confirm  </button>
                                             </form>

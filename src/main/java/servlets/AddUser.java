@@ -33,8 +33,6 @@ public class AddUser extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		HttpSession session = request.getSession();
     	Object form = session.getAttribute("form");
     	
@@ -50,8 +48,6 @@ public class AddUser extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//doGet(request, response);
 		
 		AddUserService form = new AddUserService(request);
 		//System.out.println(form);
@@ -60,14 +56,16 @@ public class AddUser extends HttpServlet {
 		
 		try {
 			if(form.ajouter()) {
-				System.out.println("Add success");
+				form.setStatusMessage("success");
 				/*String url = request.getContextPath() +"/accueil" + "?message="+ form.getStatusMessage();
 				response.sendRedirect(url);*/
+				getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
 			}
 			else {
-				System.out.println("Add fail");
-				//System.out.println("erreurs: "+form.getErreurs());
+				
+				form.setStatusMessage("fail");
 				//response.sendRedirect(request.getContextPath() +"/users/add");
+				getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

@@ -43,8 +43,8 @@ public class AddUserService {
 		String password = getParameter(CHAMP_PASSWORD);
 		String role = "simple";
 		
-		user = new Users(prenom,nom, login, password,role);
-		System.out.println(user);
+		user = new Users(prenom,nom,login,password,role);
+		//System.out.println(user);
 		//IUserMetier metier = new UserMetierImpl();
 		
 		validerChamps(CHAMP_NOM, CHAMP_PRENOM, CHAMP_LOGIN,CHAMP_PASSWORD,CHAMP_PASSWORD_BIS);
@@ -96,9 +96,12 @@ public class AddUserService {
 	public String getStatusMessage() {
 		return statusMessage;
 	}
+	public void setStatusMessage(String status) {
+		this.statusMessage = status;
+	}
 
 
-	public Users getUtilisateur() {
+	public Users getUser() {
 		return user;
 	}
 

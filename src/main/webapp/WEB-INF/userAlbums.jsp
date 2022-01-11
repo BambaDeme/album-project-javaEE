@@ -5,9 +5,8 @@
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:if test="${!empty requestScope.publicAlbums}">
-  <jsp:useBean id="publicAlbums" scope="request" type="ArrayList<Albums>"/>
-</c:if>
+
+<jsp:useBean id="userAlbums" scope="request" type="ArrayList<Albums>"/>
 <!doctype html>
 <html lang="en">
   <head>
@@ -20,10 +19,9 @@
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/carousel/">
 
-    
-
     <!-- Bootstrap core CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
     <style>
@@ -72,10 +70,7 @@
                        
               </c:if>
             </ul>
-            <!-- <form class="d-flex">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success" type="submit">Search</button>
-            </form> -->
+            
             <div class="d-flex">
               <c:choose>
                 <c:when test="${empty sessionScope.user }"> 
@@ -162,12 +157,12 @@
 
           <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             <c:choose>
-              <c:when test="${ empty requestScope.publicAlbums }">
-              <p> La liste est vide </p>
+              <c:when test="${ empty requestScope.userAlbums }">
+              <p> Vous n'avez aucun album </p>
               </c:when>
 
-              <c:when test="${ !empty requestScope.publicAlbums }">
-                <c:forEach items="${requestScope.publicAlbums}" var="album">
+              <c:when test="${ !empty requestScope.userAlbums }">
+                <c:forEach items="${requestScope.userAlbums}" var="album">
                   <jsp:useBean id="album" scope="request" class="beans.Albums"/>
                   <div class="col">
                     <div class="card shadow-sm">
@@ -195,7 +190,53 @@
               </c:when>
             </c:choose>
           </div>
-          
+
+          <div style="margin-top:1rem;" >
+            <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addAlbum">
+                <i class="fa fa-plus"></i>
+                Ajouter
+            </a>
+
+            <!-- Album modal -->
+            <div id="addAlbum" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+              
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title">Créer un album</h4>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                      <form method="post" action="AddAlbum" enctype="multipart/form-data">
+                        <div class="form-group mb-3">
+                            <label for="theme">Théme</label>
+                            <input type="text" name="theme" placeholder="vacances,sport,..." class="form-control">
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="visibility">Visibilité</label>
+                            <select name="visibility" id="" class="form-select">
+                                <option value="public">public</option>
+                                <option value="private">private</option>
+                            </select>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="cover">photo de Couverture</label>
+                            <input type="file" name="cover" class="form-control">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-blockl shadow-sm"> Créer  </button>
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+              
+                </div>
+              </div>
+          </div>
+        
         </div>
 
         <hr class="featurette-divider">
@@ -210,6 +251,8 @@
 
     <!-- <script src="../assets/dist/js/bootstrap.bundle.min.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-  
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script> -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+      
   </body>
 </html>

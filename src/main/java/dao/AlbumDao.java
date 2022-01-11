@@ -53,6 +53,53 @@ public class AlbumDao {
 		return publicAlbums;
 	}
 	
+	// la liste des albums autirisés pour un utilisateur donné
+	public static ArrayList<Albums> getAuthorizedAlbums(int userId){
+		Connection conn = Database.getConnection();
+		ArrayList<Albums> authorizedAlbums = new ArrayList<Albums>();
+		
+		try {
+			PreparedStatement ps = conn.prepareStatement("select * from autorisation where user_id = ?");
+			ps.setInt(1, userId);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				int albumId = rs.getInt("album_id");
+				//System.out.println("id album: "+albumId);
+				authorizedAlbums.add(AlbumDao.getAlbum(albumId));
+			}
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return authorizedAlbums;
+		
+	}
+	
+	// la liste des albums de l'utilisateur
+	public static ArrayList<Albums> getUserAlbums(int userId){
+		Connection conn = Database.getConnection();
+		
+		ArrayList<Albums> userAlbums = new ArrayList<Albums>();
+		
+		try {
+			PreparedStatement ps = conn.prepareStatement("select * from albums where id_proprietaire = ?");
+			ps.setInt(1, userId);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				int albumId = rs.getInt("id");
+				//System.out.println("id album: "+albumId);
+				userAlbums.add(AlbumDao.getAlbum(albumId));
+			}
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return userAlbums;
+	}
+	
 
 	public static Albums getAlbum(int id) {
 		Albums album = new Albums();
