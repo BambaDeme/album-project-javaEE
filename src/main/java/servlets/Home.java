@@ -54,6 +54,8 @@ public class Home extends HttpServlet {
     		for(Albums album: publicAlbums) {
     			System.out.println(album.getCover());
     		}*/
+    	}else {
+    		request.setAttribute("publicAlbums", AlbumDao.getPublicAlbums());
     	}
 		//request.setAttribute("users",UserDao.getAll()); 
 		//System.out.println("liste: "+request.getAttribute("users"));

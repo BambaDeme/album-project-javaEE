@@ -40,7 +40,7 @@ public class AfficherAlbum extends HttpServlet {
 					response.sendRedirect(request.getContextPath());
 				}else {
 					request.setAttribute("album", album);
-					System.out.println("images: "+ImageDao.getImages(album.getId()));
+					//System.out.println("images: "+ImageDao.getImages(album.getId()));
 					request.setAttribute("images",ImageDao.getImages(album.getId()));
 					getServletContext().getRequestDispatcher("/WEB-INF/album-detail.jsp").forward(request, response);
 				}			

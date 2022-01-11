@@ -35,6 +35,36 @@ public class UserDao {
 		}
 	}
 	
+	public static Users getUserByLogin(String login) {
+		
+		Users u = new Users();
+		Connection conn = Database.getConnection();
+		
+		
+		try {
+			PreparedStatement ps = conn.prepareStatement("select * from users where login = ?");
+			ps.setString(1, login);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				u.setId(rs.getInt("id"));
+				u.setFirstName(rs.getString("firstName"));
+				u.setLastName(rs.getString("lastName"));
+				u.setLogin(rs.getString("login"));
+				u.setPassWord(rs.getString("passWord"));
+				u.setRole(rs.getString("role"));
+			}
+			else {
+				u = null;
+			}
+			ps.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return u;
+		
+	}
 	// la liste des utilisateur
 	public static ArrayList<Users> getAll() {
 		
